@@ -12,8 +12,10 @@ import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import me.ryzeon.notifier.commands.AddStreamerCommand;
 import me.ryzeon.notifier.commands.ReloadConfigCommand;
+import me.ryzeon.notifier.commands.RemoveStreamerCommand;
 import me.ryzeon.notifier.commands.SetAnnounceChannelCommand;
 import me.ryzeon.notifier.config.Configuration;
+import me.ryzeon.notifier.twitch.TwitchProvider;
 import me.ryzeon.notifier.utils.json.JsonConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
@@ -68,6 +70,7 @@ public class Notifier {
         CommandClientBuilder builder = new CommandClientBuilder();
         builder.addSlashCommands(
                 new AddStreamerCommand(),
+                new RemoveStreamerCommand(),
                 new ReloadConfigCommand(),
                 new SetAnnounceChannelCommand());
 
@@ -80,6 +83,14 @@ public class Notifier {
             System.out.println("[Notifier] Error while starting bot!");
             e.printStackTrace();
         }
+        try {
+            jda.awaitReady();
+            TwitchProvider.getInstance().connect();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } // Stop code until JDA is ready
+        System.out.println("[Notifier] Bot started!");
     }
 
     public void reloadConfig() throws Exception {
