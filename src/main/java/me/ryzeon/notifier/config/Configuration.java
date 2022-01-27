@@ -27,5 +27,5 @@ public class Configuration {
     private String channel_to_announce = "HERE_IS_YOUR_CHANNEL_TO_ANNOUNCE";
     private String message_to_announce = "@everyone {$user} is now live on Twitch! {$link}";
     
-    private List<String> streamers_to_announce = Arrays.asList("Ryzeon");
+    private List<String> streamers_to_announce = Arrays.asList("ryzeon_");
 }
