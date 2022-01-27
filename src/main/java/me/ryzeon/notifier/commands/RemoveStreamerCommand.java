@@ -19,13 +19,13 @@ import net.dv8tion.jda.api.interactions.commands.build.OptionData;
  * @Github: github.ryzeon.me
  */
 
-public class AddStreamerCommand extends SlashCommand {
+public class RemoveStreamerCommand extends SlashCommand {
 
     private final TwitchProvider twitchProvider = TwitchProvider.getInstance();
 
     {
-        this.name = "addstreamer";
-        this.help = "Add a streamer to the list!";
+        this.name = "removestreamer";
+        this.help = "Remove a streamer to the list!";
         this.options = Arrays.asList(
                 new OptionData(OptionType.STRING, "streamer", "Twitch username of the streamer!"));
     }
@@ -33,16 +33,11 @@ public class AddStreamerCommand extends SlashCommand {
     @Override
         protected void execute(SlashCommandEvent event) {
             OptionMapping option = event.getOption("streamer");
-            if(!twitchProvider.checkIfStreamerExists(option.getAsString())) {
-                event.reply("Streamer does not exist!").setEphemeral(true).queue();
+            if(!Notifier.getInstance().getConfig().getStreamers_to_announce().contains(option.getAsString())) {
+                event.reply("Streamer isn't in the list!").setEphemeral(true).queue();
                 return;
             }
-            if(Notifier.getInstance().getConfig().getStreamers_to_announce().contains(option.getAsString())) {
-                event.reply("Streamer is already in the list!").setEphemeral(true).queue();
-                return;
-            }
-            twitchProvider.listen(option.getAsString());
-            event.reply("Added " + option.getAsString() + " to the list!").setEphemeral(true).queue();
+            twitchProvider.unlisten(option.getAsString());
+            event.reply("Removed " + option.getAsString() + " from the list!").setEphemeral(true).queue();
         }
-
 }
