@@ -19,10 +19,5 @@ public class Test {
     
     public static void main(String[] args) throws InstantiationException, IllegalAccessException {
       
-        Configuration con = JsonConfig.loadConfig(Configuration.class);
-        System.out.println(con);
-        con.setBot_token("gaaxd");
-        con.setChannel_to_announce("1939393");
-        JsonConfig.save(con);
     }
 }
