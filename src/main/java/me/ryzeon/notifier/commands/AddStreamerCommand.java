@@ -27,7 +27,7 @@ public class AddStreamerCommand extends SlashCommand {
         this.name = "addstreamer";
         this.help = "Add a streamer to the list!";
         this.options = Arrays.asList(
-                new OptionData(OptionType.STRING, "streamer", "Twitch username of the streamer!"));
+                new OptionData(OptionType.STRING, "streamer", "Twitch username of the streamer!", true));
     }
 
     @Override

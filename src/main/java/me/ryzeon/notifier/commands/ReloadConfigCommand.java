@@ -15,6 +15,11 @@ import net.dv8tion.jda.api.events.interaction.SlashCommandEvent;
 
 public class ReloadConfigCommand extends SlashCommand {
 
+    {
+        this.name = "reloadconfig";
+        this.help = "Reload the config!";
+    }
+
     @Override
     protected void execute(SlashCommandEvent event) {
         try {

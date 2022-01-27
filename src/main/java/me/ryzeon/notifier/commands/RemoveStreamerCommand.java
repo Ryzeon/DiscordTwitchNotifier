@@ -27,7 +27,7 @@ public class RemoveStreamerCommand extends SlashCommand {
         this.name = "removestreamer";
         this.help = "Remove a streamer to the list!";
         this.options = Arrays.asList(
-                new OptionData(OptionType.STRING, "streamer", "Twitch username of the streamer!"));
+                new OptionData(OptionType.STRING, "streamer", "Twitch username of the streamer!", true));
     }
 
     @Override

@@ -39,9 +39,9 @@
       <scope>provided</scope>
     </dependency>
 
+
     <dependency>
       <groupId>pw.chew</groupId>
-      <!-- Notice that the dependency notation ends with "-command" -->
       <artifactId>jda-chewtils-command</artifactId>
       <version>1.24.1</version>
       <scope>compile</scope>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>net.dv8tion</groupId>
       <artifactId>JDA</artifactId>
-      <version>5.0.0-alpha.4</version>
+      <version>4.4.0_350</version>
     </dependency>
 
     <dependency>
