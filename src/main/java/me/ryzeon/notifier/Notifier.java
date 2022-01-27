@@ -20,11 +20,14 @@ import me.ryzeon.notifier.utils.json.JsonConfig;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
 import com.jagrosh.jdautilities.command.CommandClient;
 import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import com.jagrosh.jdautilities.command.SlashCommand;
+import com.jagrosh.jdautilities.command.impl.CommandClientImpl;
 
 /**
  * @Created by Ryzeon
@@ -68,13 +71,27 @@ public class Notifier {
         botBuilder.setStatus(OnlineStatus.ONLINE);
 
         CommandClientBuilder builder = new CommandClientBuilder();
+        builder.setOwnerId("411968391402749963");
+        builder.useHelpBuilder(false);
         builder.addSlashCommands(
                 new AddStreamerCommand(),
                 new RemoveStreamerCommand(),
                 new ReloadConfigCommand(),
                 new SetAnnounceChannelCommand());
 
-        botBuilder.addEventListeners(builder.build());
+        CommandClientImpl client = (CommandClientImpl) builder.build();
+        botBuilder.addEventListeners(
+                client,
+                new ListenerAdapter() {
+
+                    @Override
+                    public void onReady(ReadyEvent event) {
+                        System.out.println("[Notifier] Bot is ready!");
+                        TwitchProvider.getInstance().connect();
+                    }
+                }
+
+        );
         System.out.println("[Notifier] Commands loaded!");
         System.out.println("[Notifier] Starting bot...");
         try {
@@ -83,13 +100,7 @@ public class Notifier {
             System.out.println("[Notifier] Error while starting bot!");
             e.printStackTrace();
         }
-        try {
-            jda.awaitReady();
-            TwitchProvider.getInstance().connect();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } // Stop code until JDA is ready
+
         System.out.println("[Notifier] Bot started!");
     }
 
